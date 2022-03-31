@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSCalc</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div id="wrapper">
+        <p id="res">0</p>
+        <div id="buttons">
+            <button></button>
+            <button></button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="clearAll()">C</button>
+            <button></button>
+            <button></button>
+            <button></button>
+            <button></button>
+            <button></button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="printNumber(this)">7</button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="printNumber(this)">8</button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="printNumber(this)">9</button>
+            <button></button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="printNumber(this)">4</button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="printNumber(this)">5</button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="printNumber(this)">6</button>
+            <button></button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="printNumber(this)">1</button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="printNumber(this)">2</button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="printNumber(this)">3</button>
+            <button></button>
+            <button></button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="printNumber(this)">0</button>
+            <button></button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)"></button>
+        </div>
+    </div>
+    <script>
+        let x = document.getElementById("res");
+        let tmp = document.getElementsByTagName("button");
+        let tmpColor = tmp[0].style.backgroundColor;
+        function printNumber(number) {
+            if (x.innerHTML.length==1 && x.innerHTML=="0") {
+                x.innerHTML="";
+            }
+            if (x.innerHTML.length<19) {
+                x.innerHTML+=number.innerHTML;
+            }
+            
+        }
+        function clearAll(){
+            x.innerHTML="0";
+        }
+        function colorOn(btn){
+            let r1=Math.floor(Math.random() * 256);
+            let r2=Math.floor(Math.random() * 256);
+            let r3=Math.floor(Math.random() * 256);
+            btn.style.backgroundColor="rgb("+r1+","+r2+","+r3+")";
+            btn.style.borderRadius="5px";
+        }
+        function colorOff(btn){
+            btn.style.backgroundColor=tmpColor;
+        }
+    </script>
+</body>
+</html> 
