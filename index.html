@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="style.css">
 
 </head>
+
 <body>
     <div id="wrapper">
         <p id="res">0</p>
@@ -15,55 +17,94 @@
             <button></button>
             <button></button>
             <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="clearAll()">C</button>
+            <button onclick="backSpace()">&#8656;</button>
+            <button onclick="obratnoe()">&#8543;x</button>
+            <button onclick="kvadrat()">x&#178;</button>
+            <button onclick="koren()">&#8730;x</button>
+            <button></button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)">7</button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)">8</button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)">9</button>
+            <button></button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)">4</button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)">5</button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)">6</button>
+            <button></button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)">1</button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)">2</button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)">3</button>
             <button></button>
             <button></button>
-            <button></button>
-            <button></button>
-            <button></button>
-            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="printNumber(this)">7</button>
-            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="printNumber(this)">8</button>
-            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="printNumber(this)">9</button>
-            <button></button>
-            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="printNumber(this)">4</button>
-            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="printNumber(this)">5</button>
-            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="printNumber(this)">6</button>
-            <button></button>
-            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="printNumber(this)">1</button>
-            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="printNumber(this)">2</button>
-            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="printNumber(this)">3</button>
-            <button></button>
-            <button></button>
-            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)" onclick="printNumber(this)">0</button>
+            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)">0</button>
             <button></button>
             <button onmousedown="colorOn(this)" onmouseup="colorOff(this)"></button>
         </div>
     </div>
+    <p>123</p>
     <script>
         let x = document.getElementById("res");
         let tmp = document.getElementsByTagName("button");
         let tmpColor = tmp[0].style.backgroundColor;
-        function printNumber(number) {
-            if (x.innerHTML.length==1 && x.innerHTML=="0") {
-                x.innerHTML="";
+        let clear = false;
+        //------------------------------------------------------------------------------------------------------------//
+        let buttons = document.getElementsByTagName("button");
+        let buttonsWithNumbers = [];
+        let j = 0;
+        for (let i = 0; i < buttons.length; i++) {
+            if (buttons[i].innerHTML.match(/[0-9]/g)) {
+                buttonsWithNumbers[j] = buttons[i];
+                j++;
             }
-            if (x.innerHTML.length<19) {
-                x.innerHTML+=number.innerHTML;
+        }
+        for (let i = 0; i < buttonsWithNumbers.length; i++) {
+            buttonsWithNumbers[i].addEventListener("click", function () { printNumber(this, clear) }, false);
+        }
+        //------------------------------------------------------------------------------------------------------------//
+        function clearAll() {
+            x.innerHTML = "0";
+        }
+
+        function printNumber(number, _clear) {
+            if (_clear) {
+                clearAll();
+                clear = false;
             }
-            
+            if (x.innerHTML.length == 1 && x.innerHTML == "0") {
+                x.innerHTML = "";
+            }
+            if (x.innerHTML.length < 19) {
+                x.innerHTML += number.innerHTML;
+            }
         }
-        function clearAll(){
-            x.innerHTML="0";
+        function colorOn(btn) {
+            let r1 = Math.floor(Math.random() * 256);
+            let r2 = Math.floor(Math.random() * 256);
+            let r3 = Math.floor(Math.random() * 256);
+            btn.style.backgroundColor = "rgb(" + r1 + "," + r2 + "," + r3 + ")";
+            btn.style.borderRadius = "5px";
         }
-        function colorOn(btn){
-            let r1=Math.floor(Math.random() * 256);
-            let r2=Math.floor(Math.random() * 256);
-            let r3=Math.floor(Math.random() * 256);
-            btn.style.backgroundColor="rgb("+r1+","+r2+","+r3+")";
-            btn.style.borderRadius="5px";
+        function colorOff(btn) {
+            btn.style.backgroundColor = tmpColor;
         }
-        function colorOff(btn){
-            btn.style.backgroundColor=tmpColor;
+        function backSpace() {
+            x.innerHTML = x.innerHTML.slice(0, -1);
+            if (x.innerHTML.length < 1) {
+                x.innerHTML = "0";
+            }
+        }
+        function obratnoe() {
+            x.innerHTML = 1 / x.innerHTML;
+            clear = true;
+        }
+        function kvadrat() {
+            x.innerHTML**=2;
+            clear = true;
+        }
+        function koren() {
+            x.innerHTML = Math.sqrt(x.innerHTML);
+            clear=true;
         }
     </script>
 </body>
-</html> 
+
+</html>
