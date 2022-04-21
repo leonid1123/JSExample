@@ -1,9 +1,18 @@
-p{
+#history{
+    font-size: small;
+    margin-right: 17px;
+    margin-bottom: 0px;
+    text-align: right;
+    color: rgb(108, 108, 108);
+    height: 15.2px;
+}
+#res{
     font-size: large;
     margin-right: 17px;
     text-align: right;
 }
 #wrapper{
+    margin-left: 100px;
     display: flex;
     flex-direction: column;
     width:250px;

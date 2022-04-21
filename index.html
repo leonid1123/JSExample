@@ -12,6 +12,7 @@
 
 <body>
     <div id="wrapper">
+        <p id="history"></p>
         <p id="res">0</p>
         <div id="buttons">
             <button></button>
@@ -21,31 +22,38 @@
             <button onclick="obratnoe()">&#8543;x</button>
             <button onclick="kvadrat()">x&#178;</button>
             <button onclick="koren()">&#8730;x</button>
-            <button></button>
+            <button onclick="part1(this)">/</button>
             <button onmousedown="colorOn(this)" onmouseup="colorOff(this)">7</button>
             <button onmousedown="colorOn(this)" onmouseup="colorOff(this)">8</button>
             <button onmousedown="colorOn(this)" onmouseup="colorOff(this)">9</button>
-            <button></button>
+            <button onclick="part1(this)">*</button>
             <button onmousedown="colorOn(this)" onmouseup="colorOff(this)">4</button>
             <button onmousedown="colorOn(this)" onmouseup="colorOff(this)">5</button>
             <button onmousedown="colorOn(this)" onmouseup="colorOff(this)">6</button>
-            <button></button>
+            <button onclick="part1(this)">-</button>
             <button onmousedown="colorOn(this)" onmouseup="colorOff(this)">1</button>
             <button onmousedown="colorOn(this)" onmouseup="colorOff(this)">2</button>
             <button onmousedown="colorOn(this)" onmouseup="colorOff(this)">3</button>
-            <button></button>
-            <button></button>
+            <button onclick="part1(this)">+</button>
+            <button onclick="znakChange()">+/-</button>
             <button onmousedown="colorOn(this)" onmouseup="colorOff(this)">0</button>
-            <button></button>
-            <button onmousedown="colorOn(this)" onmouseup="colorOff(this)"></button>
+            <button onclick="zap()">,</button>
+            <button onclick="calc()" onmousedown="colorOn(this)" onmouseup="colorOff(this)">=</button>
         </div>
     </div>
-    <p>123</p>
     <script>
         let x = document.getElementById("res");
+        let h = document.getElementById("history");
+
         let tmp = document.getElementsByTagName("button");
         let tmpColor = tmp[0].style.backgroundColor;
         let clear = false;
+
+        let fnum;
+        let snum;
+        let znak;
+
+        let z = 0;
         //------------------------------------------------------------------------------------------------------------//
         let buttons = document.getElementsByTagName("button");
         let buttonsWithNumbers = [];
@@ -60,13 +68,54 @@
             buttonsWithNumbers[i].addEventListener("click", function () { printNumber(this, clear) }, false);
         }
         //------------------------------------------------------------------------------------------------------------//
+        function part1(btn) { //поправить несколько действий подряд
+            z++;
+            if(z==3) {
+                z=1;
+            }
+            if (z==1) {
+                fnum = x.innerHTML;
+                znak = btn.innerHTML;
+            } 
+            if (z==2) {
+                
+                calc();
+                znak = btn.innerHTML;
+                
+            }
+            console.log(fnum + znak);
+            h.innerHTML = fnum + znak;
+            clear = true;
+        }
+        function calc() {
+            
+            snum = x.innerHTML;
+            switch (znak) {
+                case "-":
+                    x.innerHTML = fnum - snum;
+                    break;
+                case "+":
+                    x.innerHTML = Number(fnum) + Number(snum);
+                    break;
+                case "*":
+                    x.innerHTML = fnum * snum;
+                    break;
+                case "/":
+                    x.innerHTML = fnum / snum;
+                    break;
+            }
+            console.log(snum + "=" + x.innerHTML);
+            h.innerHTML += snum + "=";
+            clear = true;
+        }
         function clearAll() {
             x.innerHTML = "0";
-        }
+            z = 0;
 
+        }
         function printNumber(number, _clear) {
             if (_clear) {
-                clearAll();
+                x.innerHTML = "";
                 clear = false;
             }
             if (x.innerHTML.length == 1 && x.innerHTML == "0") {
@@ -97,12 +146,21 @@
             clear = true;
         }
         function kvadrat() {
-            x.innerHTML**=2;
+            x.innerHTML **= 2;
             clear = true;
         }
         function koren() {
             x.innerHTML = Math.sqrt(x.innerHTML);
-            clear=true;
+            clear = true;
+        }
+        function znakChange() {
+            x.innerHTML *= -1;
+            clear = true;
+        }
+        function zap() {
+            if (x.innerHTML.indexOf(".") == -1) {
+                x.innerHTML += ".";
+            }
         }
     </script>
 </body>
